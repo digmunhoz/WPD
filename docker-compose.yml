@@ -21,7 +21,11 @@ services:
      - "80:80"
     env_file: .env
     volumes:
-     - "./data:/var/www/html/:rw"
+     - "./volumes/wordpress:/var/www/html/:rw"
+    depends_on:
+     - database
+    links:
+     - database
   ftp:
     container_name: ftp
     restart: always
@@ -35,7 +39,7 @@ services:
     env_file: .env
     volumes:
      - "./conf/vsftpd:/etc/vsftpd:ro"
-     - "./data:/var/www/html/:rw"
+     - "./volumes/wordpress:/var/www/html/:rw"
      - "./conf/pam.d/vsftpd:/etc/pam.d/vsftpd:ro"
      - "./users/vsftpd:/tmp/vsftpd.passwd:ro"
     command: vsftpd -opasv_address=${FTP_PASV_ADDRESS} -opasv_addr_resolve=${FTP_ADDRESS_RESOLVE} /etc/vsftpd/vsftpd.conf
