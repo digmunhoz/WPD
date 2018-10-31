@@ -16,7 +16,7 @@ services:
   wordpress:
     container_name: wordpress
     restart: always
-    image: wordpress:4.9.8
+    image: wordpress:${WORDPRESS_VERSION}
     ports:
      - "80:80"
     env_file: .env
